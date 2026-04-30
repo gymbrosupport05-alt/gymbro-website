@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GYMBRO Admin - Orders Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #000;
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            position: sticky;
+            top: 0;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 1rem 2rem;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+        }
+
+        .logout-btn {
+            background: #ff4757;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .login-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #000 0%, #111 100%);
+        }
+
+        .login-form {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            min-width: 300px;
+        }
+
+        .login-form h2 {
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .dashboard {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ff4757;
+        }
+
+        .orders-table {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        th {
+            background: rgba(255, 71, 87, 0.2);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+        }
+
+        .status-pending {
+            color: #ffaa00;
+            font-weight: 600;
+        }
+
+        .status-shipped {
+            color: #00ff88;
+            font-weight: 600;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            color: #ff4757;
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+
+        .no-orders {
+            text-align: center;
+            padding: 3rem;
+            color: #ccc;
+            font-style: italic;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard {
+                padding: 1rem;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 0.9rem;
+            }
+
+            th,
+            td {
+                padding: 0.75rem 0.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar" id="adminNav" style="display: none;">
+        <div class="nav-logo">GYMBRO <span style="color: #ff4757; font-weight: 600;">ADMIN</span></div>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </nav>
+
+    <div class="login-container" id="loginContainer">
+        <div class="login-form">
+            <h2><i class="fas fa-lock"></i> Admin Login</h2>
+            <input type="password" id="adminPassword" class="login-input" placeholder="Password" maxlength="20">
+            <button class="login-btn" onclick="login()">Login</button>
+            <p style="margin-top: 1rem; color: #ccc; font-size: 0.9rem;">Demo Password: <strong>admin</strong></p>
+        </div>
+    </div>
+
+    <div class="dashboard" id="dashboard" style="display: none;">
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalOrders">0</div>
+                <div>Total Orders</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="pendingOrders">0</div>
+                <div>Pending</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="shippedOrders">0</div>
+                <div>Shipped</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalRevenue">₹0</div>
+                <div>Total Revenue</div>
+            </div>
+        </div>
+
+        <div class="orders-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Customer</th>
+                        <th>Items</th>
+                        <th>Total</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersTable">
+                    <tr>
+                        <td colspan="7" class="no-orders">No orders yet. Complete a checkout on main site to see orders
+                            here.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        const PASSWORD = 'admin';
+        let orders = [];
+
+        function login() {
+            const password = document.getElementById('adminPassword').value;
+            if (password === PASSWORD) {
+                localStorage.setItem('gymbroAdminLoggedIn', 'true');
+                document.getElementById('loginContainer').style.display = 'none';
+                document.getElementById('adminNav').style.display = 'flex';
+                document.getElementById('dashboard').style.display = 'block';
+                loadOrders();
+            } else {
+                alert('Wrong password!');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('gymbroAdminLoggedIn');
+            document.getElementById('loginContainer').style.display = 'flex';
+            document.getElementById('adminNav').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('adminPassword').value = '';
+        }
+
+        function loadOrders() {
+            orders = JSON.parse(localStorage.getItem('gymbroOrders')) || [];
+            renderOrders();
+            updateStats();
+        }
+
+        function updateStats() {
+            const totalOrders = orders.length;
+            const pendingOrders = orders.filter(o => o.status === 'pending').length;
+            const shippedOrders = orders.filter(o => o.status === 'shipped').length;
+            const totalRevenue = orders.reduce((sum, o) => sum + o.total, 0);
+
+            document.getElementById('totalOrders').textContent = totalOrders;
+            document.getElementById('pendingOrders').textContent = pendingOrders;
+            document.getElementById('shippedOrders').textContent = shippedOrders;
+            document.getElementById('totalRevenue').textContent = `₹${totalRevenue.toLocaleString()}`;
+        }
+
+        function renderOrders() {
+            const tbody = document.getElementById('ordersTable');
+            if (orders.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="no-orders">No orders yet. Complete a checkout on main site to see orders here.</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = orders.map(order => `
+                <tr>
+                    <td>${order.id}</td>
+                    <td>${order.customer}</td>
+                    <td>${order.totalItems}</td>
+                    <td>₹${order.total.toLocaleString()}</td>
+                    <td>${order.date}</td>
+                    <td class="status-${order.status}">${order.status.toUpperCase()}</td>
+                    <td>
+                        <button class="action-btn" onclick="viewOrderDetails('${order.id}')" title="View Details">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        ${order.status === 'pending' ?
+                    `<button class="action-btn" onclick="markShipped('${order.id}')" title="Mark Shipped">
+                                <i class="fas fa-truck"></i>
+                            </button>` :
+                    `<span style="color: #00ff88;">✓ Shipped</span>`
+                }
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function markShipped(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = 'shipped';
+                localStorage.setItem('gymbroOrders', JSON.stringify(orders));
+                loadOrders();
+            }
+        }
+
+        function viewOrderDetails(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                let itemsList = order.items.map(item => `${item.quantity}x ${item.name} (₹${Math.round(item.price * item.quantity)})`).join('\\n');
+                alert(`Order ${order.id}\\nCustomer: ${order.customer}\\nTotal Items: ${order.totalItems}\\nTotal: ₹${order.total}\\nStatus: ${order.status}\\nDate: ${order.date}\\n\\nItems:\\n${itemsList}`);
+            }
+        }
+
+        // Auto login check
+        if (localStorage.getItem('gymbroAdminLoggedIn')) {
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('adminNav').style.display = 'flex';
+            document.getElementById('dashboard').style.display = 'block';
+            loadOrders();
+        }
+
+        // Enter key login
+        document.getElementById('adminPassword').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') login();
+        });
+
+        // Refresh orders every 5s
+        setInterval(loadOrders, 5000);
+    </script>
+</body>
+
+</html>
