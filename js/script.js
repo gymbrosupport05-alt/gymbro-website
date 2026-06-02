@@ -75,18 +75,28 @@ function checkout() {
     const customerName = prompt('Enter customer name:') || 'Guest';
     if (!customerName) return;
 
+    // Admin page enhancement: capture customer email/mobile + payment method.
+    // These are stored inside localStorage and rendered in admin.html.
+    const customerEmail = (prompt('Enter customer email (gmail):') || '').trim();
+    const customerMobile = (prompt('Enter customer mobile number:') || '').trim();
+    const paymentMethod = (prompt('Enter payment method (e.g., Card/UPI/COD):') || 'Unknown').trim();
+
     const totalItems = cart.reduce((s, i) => s + i.quantity, 0);
     const totalAmount = Math.round(cart.reduce((s, i) => s + (i.price * i.quantity), 0));
 
     const order = {
         id: 'ORDER-' + Date.now(),
         customer: customerName,
+        customerEmail,
+        customerMobile,
+        paymentMethod,
         items: [...cart],
         total: totalAmount,
         totalItems,
         date: new Date().toLocaleString('en-IN'),
         status: 'pending'
     };
+
 
     let orders = JSON.parse(localStorage.getItem('gymbroOrders')) || [];
     orders.push(order);
@@ -105,9 +115,12 @@ document.getElementById('cartOverlay').addEventListener('click', closeCart);
 // Smooth scroll for hero buttons
 function scrollToSection(sectionId) {
     const element = document.getElementById(sectionId);
-    if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    if (!element) return;
+
+    // Premium-feel scroll to the top of the PRODUCTS section.
+    // Use scrollIntoView exactly as requested to avoid jumpy anchor behavior.
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
 }
 
 // PROFESSIONAL PRODUCT FILTERING - Scoped to .product-grid only
@@ -181,7 +194,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // COLLECTIONS → PRODUCTS FILTERING ENHANCEMENT
 function filterAndScroll(category) {
+    // Ensure filter click doesn't trigger any anchor hash/navigation.
+    // (Buttons/links are handled by event.preventDefault() where applicable.)
     filterProducts(category);
+
 
     // Activate filter button
     const filterBtn = document.querySelector(`.filter-btn[data-category="${category}"], .filter-btn[data-filter="${category}"]`);

@@ -169,6 +169,16 @@
             margin-right: 0.5rem;
         }
 
+        .delete-btn {
+            color: #ff4757;
+            opacity: 0.95;
+        }
+
+        .delete-btn:hover {
+            color: #ff2f2f;
+            transform: translateY(-1px);
+        }
+
         .no-orders {
             text-align: center;
             padding: 3rem;
@@ -199,7 +209,7 @@
 
 <body>
     <nav class="navbar" id="adminNav" style="display: none;">
-        <div class="nav-logo">GYMBRO <span style="color: #ff4757; font-weight: 600;">ADMIN</span></div>
+        <div class="nav-logo">GYMBRO <span style="color: #ff4757; font-weight: 600;">admin</span></div>
         <button class="logout-btn" onclick="logout()">Logout</button>
     </nav>
 
@@ -208,7 +218,7 @@
             <h2><i class="fas fa-lock"></i> Admin Login</h2>
             <input type="password" id="adminPassword" class="login-input" placeholder="Password" maxlength="20">
             <button class="login-btn" onclick="login()">Login</button>
-            <p style="margin-top: 1rem; color: #ccc; font-size: 0.9rem;">Demo Password: <strong>admin</strong></p>
+            <p style="margin-top: 1rem; color: #ccc; font-size: 0.9rem;"></strong></p>
         </div>
     </div>
 
@@ -232,14 +242,25 @@
             </div>
         </div>
 
+        <div style="display:flex; align-items:center; justify-content: space-between; gap: 12px; margin-bottom: 14px;">
+            <div style="color:#ccc; font-size: 0.95rem;">Orders are stored in your browser (localStorage).</div>
+            <button class="login-btn" style="width:auto; padding: 0.75rem 1.25rem; border-radius: 12px;"
+                onclick="downloadOrdersCSV()">
+                <i class="fas fa-download" style="margin-right: 8px;"></i>Download Orders (CSV)
+            </button>
+        </div>
+
         <div class="orders-table">
             <table>
                 <thead>
                     <tr>
                         <th>ID</th>
                         <th>Customer</th>
+                        <th>Email</th>
+                        <th>Mobile</th>
                         <th>Items</th>
                         <th>Total</th>
+                        <th>Payment</th>
                         <th>Date</th>
                         <th>Status</th>
                         <th>Actions</th>
@@ -247,7 +268,7 @@
                 </thead>
                 <tbody id="ordersTable">
                     <tr>
-                        <td colspan="7" class="no-orders">No orders yet. Complete a checkout on main site to see orders
+                        <td colspan="10" class="no-orders">No orders yet. Complete a checkout on main site to see orders
                             here.</td>
                     </tr>
                 </tbody>
@@ -290,9 +311,17 @@
             const totalOrders = orders.length;
             const pendingOrders = orders.filter(o => o.status === 'pending').length;
             const shippedOrders = orders.filter(o => o.status === 'shipped').length;
-            const totalRevenue = orders.reduce((sum, o) => sum + o.total, 0);
+            const totalRevenue = orders.reduce((sum, o) => sum + (o.total || 0), 0);
 
             document.getElementById('totalOrders').textContent = totalOrders;
+
+            // Guard for older orders that might not have these fields
+            orders.forEach(o => {
+                o.customerEmail = o.customerEmail ?? '';
+                o.customerMobile = o.customerMobile ?? '';
+                o.paymentMethod = o.paymentMethod ?? 'Unknown';
+            });
+
             document.getElementById('pendingOrders').textContent = pendingOrders;
             document.getElementById('shippedOrders').textContent = shippedOrders;
             document.getElementById('totalRevenue').textContent = `₹${totalRevenue.toLocaleString()}`;
@@ -301,7 +330,7 @@
         function renderOrders() {
             const tbody = document.getElementById('ordersTable');
             if (orders.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" class="no-orders">No orders yet. Complete a checkout on main site to see orders here.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="10" class="no-orders">No orders yet. Complete a checkout on main site to see orders here.</td></tr>';
                 return;
             }
 
@@ -309,20 +338,25 @@
                 <tr>
                     <td>${order.id}</td>
                     <td>${order.customer}</td>
+                    <td>${order.customerEmail || ''}</td>
+                    <td>${order.customerMobile || ''}</td>
                     <td>${order.totalItems}</td>
-                    <td>₹${order.total.toLocaleString()}</td>
+                    <td>₹${(order.total || 0).toLocaleString()}</td>
+                    <td>${order.paymentMethod || 'Unknown'}</td>
                     <td>${order.date}</td>
-                    <td class="status-${order.status}">${order.status.toUpperCase()}</td>
+                    <td class="status-${order.status}">${(order.status || '').toUpperCase()}</td>
                     <td>
                         <button class="action-btn" onclick="viewOrderDetails('${order.id}')" title="View Details">
                             <i class="fas fa-eye"></i>
                         </button>
-                        ${order.status === 'pending' ?
-                    `<button class="action-btn" onclick="markShipped('${order.id}')" title="Mark Shipped">
+                        ${order.status === 'pending' ? `
+                            <button class="action-btn delete-btn" onclick="deleteOrder('${order.id}')" title="Delete order">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                            <button class="action-btn" onclick="markShipped('${order.id}')" title="Mark Shipped">
                                 <i class="fas fa-truck"></i>
-                            </button>` :
-                    `<span style="color: #00ff88;">✓ Shipped</span>`
-                }
+                            </button>
+                        ` : `<span style="color: #00ff88;">✓ Shipped</span>`}
                     </td>
                 </tr>
             `).join('');
@@ -337,12 +371,82 @@
             }
         }
 
+        function deleteOrder(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+
+            const confirmed = confirm(`Are you sure you want to delete ${order.id} (${order.customer})?`);
+            if (!confirmed) return;
+
+            orders = orders.filter(o => o.id !== orderId);
+            localStorage.setItem('gymbroOrders', JSON.stringify(orders));
+            loadOrders();
+        }
+
         function viewOrderDetails(orderId) {
             const order = orders.find(o => o.id === orderId);
-            if (order) {
-                let itemsList = order.items.map(item => `${item.quantity}x ${item.name} (₹${Math.round(item.price * item.quantity)})`).join('\\n');
-                alert(`Order ${order.id}\\nCustomer: ${order.customer}\\nTotal Items: ${order.totalItems}\\nTotal: ₹${order.total}\\nStatus: ${order.status}\\nDate: ${order.date}\\n\\nItems:\\n${itemsList}`);
-            }
+            if (!order) return;
+
+            const itemsList = (order.items || [])
+                .map(item => `${item.quantity}x ${item.name} (₹${Math.round((item.price || 0) * (item.quantity || 0))})`)
+                .join('\n');
+
+            alert(`Order ${order.id}\nCustomer: ${order.customer}\nTotal Items: ${order.totalItems}\nTotal: ₹${order.total}\nStatus: ${order.status}\nDate: ${order.date}\n\nItems:\n${itemsList}`);
+        }
+
+        function downloadOrdersCSV() {
+            const headers = [
+                'id',
+                'customer',
+                'customerEmail',
+                'customerMobile',
+                'paymentMethod',
+                'date',
+                'status',
+                'totalItems',
+                'total',
+                'items'
+            ];
+
+            const escapeCSV = (value) => {
+                if (value === null || value === undefined) return '';
+                const str = String(value);
+                if (/[",\n]/.test(str)) {
+                    return `"${str.replace(/"/g, '""')}"`;
+                }
+                return str;
+            };
+
+            const rows = orders.map(order => {
+                const itemsText = (order.items || [])
+                    .map(i => `${i.quantity}x ${i.name}`)
+                    .join('; ');
+
+                return [
+                    order.id,
+                    order.customer,
+                    order.customerEmail ?? '',
+                    order.customerMobile ?? '',
+                    order.paymentMethod ?? 'Unknown',
+                    order.date,
+                    order.status,
+                    order.totalItems,
+                    order.total,
+                    itemsText
+                ].map(escapeCSV).join(',');
+            });
+
+            const csvContent = [headers.join(','), ...rows].join('\r\n');
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+
+            const a = document.createElement('a');
+            const url = URL.createObjectURL(blob);
+            a.href = url;
+            a.download = `gymbro-orders-${new Date().toISOString().slice(0, 10)}.csv`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
 
         // Auto login check

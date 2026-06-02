@@ -1,22 +1,8 @@
-# Collections Section UI Modernization - BLACKBOXAI
-Status: 🚧 In Progress
+# TODO
 
-## Approved Plan Implementation Steps
+- [ ] Increase the hero video/card size to make the assets (video) appear larger.
+- [ ] Update `index.html` inline CSS for `.hero-video` sizing.
+- [ ] Update responsive styles for mobile breakpoints to keep video large.
+- [ ] (Optional) Adjust `.hero-container` layout gap/margins so the larger video fits without layout issues.
+- [ ] Verify by running in browser.
 
-### 1. [✅] Create this TODO.md
-### 2. [✅] Update .collections-grid (grid layout, responsive cols)
-### 3. [✅] Update .collection-card base styles (rectangular aspect-ratio 4/3, border-radius 20px, min-height)
-### 4. [✅] Enhance .collection-card::before (dark gradient overlay for text)
-### 5. [ ] Reposition .collection-title (bottom-left)
-### 6. [✅] Add smooth hover effects (translateY(-8px), scale(1.03), red glow shadow)
-### 7. [ ] Update .collection-card.active (subtle enhancements)
-### 8. [ ] Refine responsive media queries
-### 9. [ ] Verify no color changes, JS intact
-### 10. [✅] Test & attempt_completion
-
-**COMPLETED ✅**
-
-**Notes:**
-- NO HTML/JS changes
-- Preserve #ff4757 red, black/white theme
-- Rectangular cards, responsive grid, hover fx only

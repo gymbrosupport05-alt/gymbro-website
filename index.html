@@ -39,6 +39,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 1rem;
         }
 
         .nav-logo h1 {
@@ -67,38 +68,163 @@
             font-weight: 700;
         }
 
-        /* HERO */
+        /* HERO - PROFESSIONAL GRID WITH 3D ANIMATION */
         .hero {
-            height: 100vh;
+            min-height: calc(100vh - 90px);
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
+            gap: 3rem;
+            max-width: 100%;
+            margin: 0 auto;
+            padding: clamp(4rem, 8vh, 8rem) 2rem 4rem;
             background: #000;
+            text-align: left;
+            overflow: hidden;
+        }
+
+        .hero-container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem;
+            margin-top: 0;
+        }
+
+        .hero-text {
+            flex: 1 1 0;
+            min-width: 320px;
+            max-width: 720px;
+            text-align: left;
+            transform: translateY(-90px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+
+        .hero-video {
+            /* Bigger hero video/card */
+            /* Drag the hero dumbbell/card closer to the left to match layout */
+            transform: translateX(55px) translateY(-20px) scale(1.10);
+
+
+
+
+
+            flex: 0 0 min(66%, 1250px);
+            width: min(100%, 1250px);
+            aspect-ratio: 1.10 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: -40px;
+            margin-left: 40px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 24px;
+            background: rgba(0, 0, 0, 0.25);
+            box-shadow: inset 20px 0 60px rgba(0, 0, 0, 0.45), inset 0 0 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .hero-video::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            background:
+                linear-gradient(to right, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.45) 12%, rgba(0, 0, 0, 0.18) 22%, rgba(0, 0, 0, 0.08) 35%, transparent 55%),
+                radial-gradient(circle at top left, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.3) 30%, transparent 55%),
+                radial-gradient(circle at bottom left, rgba(0, 0, 0, 0.65) 0%, rgba(0, 0, 0, 0.24) 28%, transparent 55%),
+                radial-gradient(circle at 17% 32%, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.0) 16%, transparent 28%),
+                radial-gradient(ellipse at center, transparent 20%, rgba(0, 0, 0, 0.22) 100%);
+            pointer-events: none;
+            border-radius: inherit;
+        }
+
+        .hero-video::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            z-index: 3;
+            backdrop-filter: blur(0px);
+            background: radial-gradient(ellipse at center, transparent 45%, rgba(0, 0, 0, 0.28) 100%);
+            pointer-events: none;
+            border-radius: inherit;
         }
 
         .hero-content {
-            max-width: 500px;
-            padding: 0 20px;
+            max-width: 900px;
+            padding: 0;
         }
 
         .hero-tag {
-            font-size: 14px;
-            letter-spacing: 6px;
+            font-size: clamp(0.9rem, 1.2vw, 1rem);
+            letter-spacing: 0.35em;
             color: #ccc;
             margin-bottom: 24px;
+            margin-top: 2rem;
             text-transform: uppercase;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+            white-space: nowrap;
         }
 
         .hero-heading {
-            font-size: clamp(48px, 10vw, 80px);
+            font-size: clamp(4rem, 6.5vw, 7rem);
             font-weight: 900;
-            line-height: 0.9;
-            margin-bottom: 32px;
+            line-height: 0.92;
+            letter-spacing: -0.05em;
+            margin-bottom: 24px;
+            max-width: 28ch;
+            text-align: left;
+        }
+
+        .hero-line {
+            display: block;
+            white-space: nowrap;
+        }
+
+        .hero-heading .hero-highlight {
+            color: #c7a96e;
+            text-shadow: 0 2px 6px rgba(199, 169, 110, 0.3);
+            display: inline;
         }
 
         .hero-heading .grind {
-            color: #999;
+            display: block;
+            white-space: nowrap;
+            color: #f5f1e7;
+            letter-spacing: -0.03em;
+            margin-left: 0;
+            margin-top: 0.1em;
+        }
+
+        .hero-subtext {
+            font-size: clamp(16px, 3vw, 20px);
+            font-weight: 300;
+            color: #ccc;
+            line-height: 1.45;
+            max-width: 400px;
+            margin-bottom: 32px;
+        }
+
+        .btn {
+
+            padding: 18px 38px;
+            border: none;
+            border-radius: 55px;
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            min-height: 62px;
+            min-width: 180px;
         }
 
         .hero-subtext {
@@ -106,15 +232,19 @@
             font-weight: 300;
             color: #ccc;
             line-height: 1.6;
-            margin-bottom: 48px;
+            margin-bottom: 32px;
         }
 
         .hero-buttons {
             display: flex;
-            flex-direction: column;
-            gap: 16px;
+            flex-direction: row;
+            gap: 1.5rem;
             align-items: center;
+            justify-content: flex-start;
+            transform: none;
+            margin-top: 0;
         }
+
 
         .btn {
             padding: 16px 32px;
@@ -258,7 +388,7 @@
         }
 
         .product-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-10px) scale(1.04);
             box-shadow: 0 20px 40px rgba(255, 71, 87, 0.3);
         }
 
@@ -486,9 +616,12 @@
         }
 
         .story-cta:hover {
+            /* keep the hover lift but remove glow */
             transform: translateY(-3px);
-            box-shadow: 0 16px 34px rgba(255, 71, 87, 0.4), 0 0 24px rgba(255, 255, 255, 0.12);
+            box-shadow: none;
         }
+
+
 
         .story-cta span {
             transition: transform 0.3s ease;
@@ -635,8 +768,183 @@
             visibility: visible;
         }
 
+        /* NAVBAR ANIMATION VIDEO */
+        .navbar-video {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            flex-shrink: 0;
+            position: relative;
+        }
+
+        .navbar-dumbbell {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            mix-blend-mode: screen;
+            filter: brightness(1.2) contrast(1.1);
+            transition: transform 0.4s ease;
+        }
+
+        .navbar-video:hover .navbar-dumbbell {
+            transform: scale(1.1);
+        }
+
+        .hero-video video {
+            mix-blend-mode: screen;
+            position: relative;
+            z-index: 1;
+            border-radius: inherit;
+            filter: brightness(1.12) saturate(1.1);
+        }
+
+        .hero-video * {
+            background: transparent !important;
+        }
+
+
+
+        .hero-dumbbell {
+            border-radius: inherit;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: transparent;
+            pointer-events: none;
+            mix-blend-mode: multiply;
+            filter: brightness(1.28) contrast(1.32) saturate(1.1) drop-shadow(0 0 30px rgba(0, 0, 0, 0.28));
+            transform: perspective(1000px) rotateY(5deg) rotateX(3deg) translateY(-50px);
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.6s ease;
+
+            /* Feather the dumbbell into the hero card rounded corners */
+            -webkit-mask-image: radial-gradient(circle at top left, transparent 0px, #000 54px),
+                radial-gradient(circle at top right, transparent 0px, #000 54px),
+                radial-gradient(circle at bottom left, transparent 0px, #000 54px),
+                radial-gradient(circle at bottom right, transparent 0px, #000 54px),
+                linear-gradient(#000, #000);
+            -webkit-mask-composite: source-in;
+            mask-image: radial-gradient(circle at top left, transparent 0px, #000 54px),
+                radial-gradient(circle at top right, transparent 0px, #000 54px),
+                radial-gradient(circle at bottom left, transparent 0px, #000 54px),
+                radial-gradient(circle at bottom right, transparent 0px, #000 54px),
+                linear-gradient(#000, #000);
+            mask-composite: intersect;
+
+            /* Helps antialiasing look smoother */
+            will-change: transform, filter;
+        }
+
+        .hero-video:hover .hero-dumbbell {
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.05);
+        }
+
+        .hero-video:hover video {
+            transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.05);
+        }
+
+        @keyframes moveLight {
+            0% {
+                transform: translate(-20px, -10px);
+            }
+
+            50% {
+                transform: translate(20px, 10px);
+            }
+
+            100% {
+                transform: translate(-20px, -10px);
+            }
+        }
+
+
         /* RESPONSIVE */
         @media (max-width: 768px) {
+            .hero {
+                text-align: center;
+                gap: 3rem;
+                padding: 1rem;
+            }
+
+            .hero-text {
+                transform: none;
+                justify-content: flex-start;
+            }
+
+
+            /* Move left hero block upward (keeps luxury balance) */
+            .hero-text {
+                transform: translate(10px, -150px);
+            }
+
+            /* Reduce empty space above hero on smaller screens */
+            .hero-container {
+                margin-top: -6rem;
+            }
+
+            .hero-container {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-text,
+            .hero-video {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .hero-text {
+                transform: translateY(110px);
+                text-align: left;
+            }
+
+            .hero-video {
+                width: 100%;
+                height: 320px;
+                margin-top: 1.5rem;
+                flex-shrink: 0;
+                margin-left: 0;
+            }
+
+
+            .hero-video video,
+            .hero-dumbbell {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                transform: none;
+                mix-blend-mode: multiply;
+                filter: brightness(0.85) contrast(1.15);
+            }
+
+
+
+            .hero-video::before,
+            .hero-video::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                width: 80px;
+                height: 100%;
+                z-index: 2;
+                pointer-events: none;
+            }
+
+            .hero-video::before {
+                left: 0;
+                background: linear-gradient(to right, #000 0%, transparent 100%);
+            }
+
+            .hero-video::after {
+                right: 0;
+                background: linear-gradient(to left, #000 0%, transparent 100%);
+            }
+
+            .hero-video video {
+                mix-blend-mode: screen;
+            }
+
             .story {
                 padding: 80px 14px;
             }
@@ -676,23 +984,27 @@
             top: 0;
             left: 0;
             width: 100%;
-            padding: 0.9rem 0;
-            background: transparent;
-            border-bottom: 1px solid transparent;
+            padding: 1rem 0;
+            background: rgba(0, 0, 0, 0.25);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
             z-index: 1200;
-            transition: background 0.35s ease, backdrop-filter 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease, padding 0.35s ease;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .gymbro-navbar.gymbro-navbar--scrolled {
-            background: rgba(8, 8, 8, 0.78);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            border-bottom-color: rgba(255, 255, 255, 0.08);
-            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom-color: rgba(255, 255, 255, 0.12);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
 
         .gymbro-navbar__inner {
             position: relative;
+            display: flex;
+            align-items: center;
             gap: 1rem;
         }
 
@@ -758,7 +1070,7 @@
         .gymbro-navbar__menu {
             display: flex;
             align-items: center;
-            gap: 0.35rem;
+            gap: 1rem;
             margin-left: auto;
         }
 
@@ -784,9 +1096,10 @@
         .gymbro-navbar__link:hover,
         .gymbro-navbar__cart:hover {
             background: rgba(255, 255, 255, 0.08);
-            border-color: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.12);
             color: #fff;
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.15);
         }
 
         .gymbro-navbar__link--cta {
@@ -890,7 +1203,9 @@
     <nav class="navbar gymbro-navbar" aria-label="Primary">
         <div class="nav-container gymbro-navbar__inner">
             <a href="#" class="nav-logo gymbro-navbar__brand"
-                onclick="closeGymbroMenu(); window.scrollTo({ top: 0, behavior: 'smooth' }); return false;">GYMBRO</a>
+                onclick="closeGymbroMenu(); window.scrollTo({ top: 0, behavior: 'smooth' }); return false;">
+                <img src="images/gymbro.png" alt="GymBro" style="height: 52px; width: auto; display: block;">
+            </a>
 
             <button class="gymbro-navbar__toggle" type="button" id="gymbroNavToggle" aria-controls="gymbroNavMenu"
                 aria-expanded="false" aria-label="Toggle navigation">
@@ -900,6 +1215,8 @@
             </button>
 
             <div class="gymbro-navbar__menu" id="gymbroNavMenu">
+                <a href="#" class="gymbro-navbar__link"
+                    onclick="closeGymbroMenu(); window.scrollTo({ top: 0, behavior: 'smooth' }); return false;">Home</a>
                 <a href="#products" class="gymbro-navbar__link" data-gymbro-target="products">Shop</a>
                 <a href="#collections" class="gymbro-navbar__link" data-gymbro-target="collections">Collections</a>
                 <a href="#products" class="gymbro-navbar__link" data-gymbro-target="products">Products</a>
@@ -907,9 +1224,9 @@
                     <span>Cart</span>
                     <span class="cart-count gymbro-navbar__cart-count" id="cartCount">0</span>
                 </button>
-                <a href="admin.html" class="gymbro-navbar__link" onclick="closeGymbroMenu()">Admin</a>
-                <a href="https://wa.me/61400000000" class="gymbro-navbar__link gymbro-navbar__link--cta" target="_blank"
-                    rel="noopener noreferrer" onclick="closeGymbroMenu()">Contact Us</a>
+                <a href="admin.html" class="gymbro-navbar__link" onclick="closeGymbroMenu()">staff login</a>
+                <a href="https://wa.me/918978422691" class="gymbro-navbar__link gymbro-navbar__link--cta"
+                    target="_blank" rel="noopener noreferrer" onclick="closeGymbroMenu()">Contact Us</a>
 
             </div>
         </div>
@@ -917,16 +1234,26 @@
 
     <!-- HERO -->
     <section class="hero">
-        <div class="hero-content">
-            <p class="hero-tag">PREMIUM GYMWEAR • EST. 2024</p>
-            <h1 class="hero-heading">
-                BUILT FOR
-                <span class="grind">THE GRIND</span>
-            </h1>
-            <p class="hero-subtext">Engineered for performance. Designed for the relentless. Wear your discipline.</p>
-            <div class="hero-buttons">
-                <button class="btn btn-primary" onclick="scrollToSection('collections')">SHOP NOW →</button>
-                <button class="btn btn-secondary" onclick="scrollToSection('products')">EXPLORE COLLECTION</button>
+        <div class="hero-container">
+            <div class="hero-text">
+                <p class="hero-tag">PREMIUM GYMWEAR • EST. 2024</p>
+                <h1 class="hero-heading">
+                    <span class="hero-line">BUILT <span class="hero-highlight">FOR</span></span>
+                    <span class="grind">THE GRIND</span>
+                </h1>
+                <p class="hero-subtext">Engineered for performance.<br>Designed for relentless.<br>Wear your discipline.
+                </p>
+
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="scrollToSection('collections')">SHOP NOW →</button>
+                    <button class="btn btn-secondary" onclick="scrollToSection('products')">EXPLORE COLLECTION</button>
+                </div>
+            </div>
+            <div class="hero-video hero-video--right">
+                <!-- (moved to the right) -->
+                <video class="hero-dumbbell" autoplay muted loop playsinline preload="auto">
+                    <source src="assets/gymbro%20video.mp4" type="video/mp4">
+                </video>
             </div>
         </div>
     </section>
@@ -965,17 +1292,29 @@
         <h2 style="text-align: center; font-size: 48px; margin-bottom: 20px;">PRODUCTS</h2>
 
         <!-- Filter Buttons -->
-        <div class="filter-container"
-            style="display: flex; gap: 12px; overflow-x: auto; padding: 20px 0; margin-bottom: 40px; scrollbar-width: none; -ms-overflow-style: none;">
+        <div class="filter-container filter-container--with-sort"
+            style="display: flex; gap: 12px; overflow-x: auto; padding: 20px 0; margin-bottom: 40px; scrollbar-width: none; -ms-overflow-style: none; align-items: center;">
             <button class="filter-btn active" data-filter="all">All</button>
             <button class="filter-btn" data-filter="hoodies">Hoodies</button>
             <button class="filter-btn" data-filter="oversized">Oversized Tees</button>
             <button class="filter-btn" data-filter="trackpants">Track Pants</button>
             <button class="filter-btn" data-filter="accessories">Accessories</button>
+
+            <div class="sort-pill" style="margin-left: auto; flex-shrink: 0;">
+                <label for="sortDropdown" class="sort-pill__label">Sort By</label>
+                <div class="sort-pill__control">
+                    <select id="sortDropdown" class="sort-select" aria-label="Sort By">
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="price-asc">Price: Low to High</option>
+                    </select>
+                    <i class="fa-solid fa-chevron-down sort-pill__icon" aria-hidden="true"></i>
+                </div>
+            </div>
         </div>
 
+
         <div class="product-grid">
-            <div class="product-card" data-category="hoodies">
+            <div class="product-card" data-category="hoodies" data-price="89.99">
                 <div class="product-image"
                     style="background-image: url('images/gym-bro-hoodie.webp'); background-size: cover; background-position: center; height: 280px;">
                     <span class="sale-badge">SALE</span>
@@ -987,7 +1326,7 @@
                     <button class="btn-cart" onclick="addToCart('Gym Bro Hoodie', 89.99)">ADD TO CART</button>
                 </div>
             </div>
-            <div class="product-card" data-category="oversized">
+            <div class="product-card" data-category="oversized" data-price="44.99">
                 <div class="product-image"
                     style="background-image: url('images/oversized-gym-tshirt.webp'); background-size: cover; background-position: center; height: 280px;">
                 </div>
@@ -1009,7 +1348,7 @@
                     <button class="btn-cart" onclick="addToCart('Siren Crop Tee', 39.99)">ADD TO CART</button>
                 </div>
             </div>
-            <div class="product-card" data-category="trackpants">
+            <div class="product-card" data-category="trackpants" data-price="69.99">
                 <div class="product-image"
                     style="background-image: url('images/track-pants.jpg'); background-size: cover; background-position: center; height: 280px;">
                     <span class="sale-badge">SALE</span>
@@ -1021,7 +1360,7 @@
                     <button class="btn-cart" onclick="addToCart('Beast Track Pants', 69.99)">ADD TO CART</button>
                 </div>
             </div>
-            <div class="product-card" data-category="accessories">
+            <div class="product-card" data-category="accessories" data-price="29.99">
                 <div class="product-image"
                     style="background-image: url('images/pro-lift-gloves.jpg'); background-size: cover; background-position: center; height: 280px;">
                 </div>
@@ -1125,186 +1464,208 @@
     <section class="subscribe">
         <h2>Join the Bro Squad</h2>
         <p>Stay updated with drops & motivation</p>
-        <form class="subscribe-form">
-            <input type="email" class="subscribe-input" placeholder="Enter your email">
+        <form class="subscribe-form" id="subscribeForm">
+            <input type="email" id="subscribeEmail" class="subscribe-input" placeholder="Enter your email" required>
             <button type="submit" class="subscribe-btn"><img src="images/gymbro-logo.jpg" alt="GymBro"
                     style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;">JOIN NOW</button>
         </form>
+        <div id="subscribeSuccess" class="subscribe-success"
+            style="display: none; margin-top: 20px; padding: 16px; background: rgba(255, 71, 87, 0.15); border: 1px solid rgba(255, 71, 87, 0.3); border-radius: 12px; color: #ff4757; font-weight: 600; opacity: 0; transform: translateY(10px); transition: all 0.4s ease;">
+            <i class="fas fa-check-circle" style="margin-right: 8px;"></i>
+            Welcome to the Bro Squad! 💪
+        </div>
         <div style="margin-top: 30px;">
-            <a href="https://wa.me/61400000000" style="color: #25D366; margin: 0 15px; font-size: 24px;"><i
+            <a href="https://wa.me/918978422691" style="color: #25D366; margin: 0 15px; font-size: 24px;"><i
                     class="fab fa-whatsapp"></i></a>
             <a href="https://instagram.com/gymbro_au" style="color: #E4405F; margin: 0 15px; font-size: 24px;"><i
                     class="fab fa-instagram"></i></a>
         </div>
     </section>
 
+    <!-- REVIEWS -->
+    <section class="subscribe" style="padding-top: 60px;">
+        <h2>Reviews</h2>
+        <p style="margin-bottom: 20px;">Drop your rating + thoughts about our gymwear.</p>
+        <a href="reviews.html" class="story-cta" style="display:inline-flex; justify-content:center;">
+            Write a Review <span style="margin-left: 6px;">→</span>
+        </a>
+        <div style="margin-top: 30px; color:#ccc; font-weight:500;">
+            <i class="fas fa-star" style="color:#ffd166; margin-right:8px;"></i>
+            Your reviews are saved in your browser.
+        </div>
+    </section>
+
+    <!-- FAQs -->
+    <section class="faqs" style="padding: 60px 20px; text-align: center;">
+        <h2 style="margin-bottom: 40px;">Frequently Asked Questions</h2>
+        <div style="max-width: 700px; margin: 0 auto; text-align: left;">
+            <div class="faq__item" style="border-bottom: 1px solid #333; padding: 15px 0;">
+                <button class="faq__question"
+                    style="background:none; border:none; color:#fff; font-size:1rem; font-weight:600; cursor:pointer; width:100%; display:flex; justify-content:space-between; align-items:center;"
+                    aria-expanded="false" aria-controls="faq-1">
+                    What makes GYMBRO gymwear premium?
+                    <span class="faq__icon" style="font-size:1.2rem; color:#ffd166;">+</span>
+                </button>
+                <div id="faq-1" hidden style="color:#ccc; margin-top:10px; line-height:1.7;">
+                    Our gymwear is designed with high-quality materials focused on comfort, durability, and performance.
+                </div>
+            </div>
+            <div class="faq__item" style="border-bottom: 1px solid #333; padding: 15px 0;">
+                <button class="faq__question"
+                    style="background:none; border:none; color:#fff; font-size:1rem; font-weight:600; cursor:pointer; width:100%; display:flex; justify-content:space-between; align-items:center;"
+                    aria-expanded="false" aria-controls="faq-2">
+                    Is the fabric stretchable and sweat-resistant?
+                    <span class="faq__icon" style="font-size:1.2rem; color:#ffd166;">+</span>
+                </button>
+                <div id="faq-2" hidden style="color:#ccc; margin-top:10px; line-height:1.7;">
+                    Yes, our products are made with breathable, stretchable, and sweat-resistant fabric for intense
+                    workouts.
+                </div>
+            </div>
+            <div class="faq__item" style="border-bottom: 1px solid #333; padding: 15px 0;">
+                <button class="faq__question"
+                    style="background:none; border:none; color:#fff; font-size:1rem; font-weight:600; cursor:pointer; width:100%; display:flex; justify-content:space-between; align-items:center;"
+                    aria-expanded="false" aria-controls="faq-3">
+                    How do I choose the right size?
+                    <span class="faq__icon" style="font-size:1.2rem; color:#ffd166;">+</span>
+                </button>
+                <div id="faq-3" hidden style="color:#ccc; margin-top:10px; line-height:1.7;">
+                    You can use our size guide available on each product page for the perfect fit.
+                </div>
+            </div>
+            <div class="faq__item" style="border-bottom: 1px solid #333; padding: 15px 0;">
+                <button class="faq__question"
+                    style="background:none; border:none; color:#fff; font-size:1rem; font-weight:600; cursor:pointer; width:100%; display:flex; justify-content:space-between; align-items:center;"
+                    aria-expanded="false" aria-controls="faq-4">
+                    How long does shipping take?
+                    <span class="faq__icon" style="font-size:1.2rem; color:#ffd166;">+</span>
+                </button>
+                <div id="faq-4" hidden style="color:#ccc; margin-top:10px; line-height:1.7;">
+                    Orders are usually delivered within 3–7 business days depending on your location.
+                </div>
+            </div>
+            <div class="faq__item" style="border-bottom: 1px solid #333; padding: 15px 0;">
+                <button class="faq__question"
+                    style="background:none; border:none; color:#fff; font-size:1rem; font-weight:600; cursor:pointer; width:100%; display:flex; justify-content:space-between; align-items:center;"
+                    aria-expanded="false" aria-controls="faq-5">
+                    Do you offer returns or exchanges?
+                    <span class="faq__icon" style="font-size:1.2rem; color:#ffd166;">+</span>
+                </button>
+                <div id="faq-5" hidden style="color:#ccc; margin-top:10px; line-height:1.7;">
+                    Yes, we offer easy returns and exchanges for eligible products within the return period.
+                </div>
+            </div>
+            <div class="faq__item" style="border-bottom: 1px solid #333; padding: 15px 0;">
+                <button class="faq__question"
+                    style="background:none; border:none; color:#fff; font-size:1rem; font-weight:600; cursor:pointer; width:100%; display:flex; justify-content:space-between; align-items:center;"
+                    aria-expanded="false" aria-controls="faq-6">
+                    Can I wear these outfits casually too?
+                    <span class="faq__icon" style="font-size:1.2rem; color:#ffd166;">+</span>
+                </button>
+                <div id="faq-6" hidden style="color:#ccc; margin-top:10px; line-height:1.7;">
+                    Absolutely. Our designs are made for both gym performance and everyday streetwear style.
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <script src="js/script.js"></script>
+
     <script>
-        // Smooth scroll function for hero buttons
+        // FAQ accordion (no external dependencies)
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqSection = document.querySelector('.faqs');
+            if (!faqSection) return;
+
+            const buttons = faqSection.querySelectorAll('.faq__question');
+
+            buttons.forEach((btn) => {
+                btn.addEventListener('click', () => {
+                    const targetId = btn.getAttribute('aria-controls');
+                    const panel = targetId ? document.getElementById(targetId) : null;
+                    if (!panel) return;
+
+                    const isHidden = panel.hasAttribute('hidden');
+
+                    // Close all panels within this section (classic accordion behavior)
+                    buttons.forEach((otherBtn) => {
+                        const otherTargetId = otherBtn.getAttribute('aria-controls');
+                        const otherPanel = otherTargetId ? document.getElementById(otherTargetId) : null;
+                        if (!otherPanel) return;
+
+                        if (!otherPanel.hasAttribute('hidden')) {
+                            otherPanel.setAttribute('hidden', '');
+                            otherBtn.setAttribute('aria-expanded', 'false');
+                            const icon = otherBtn.querySelector('.faq__icon');
+                            if (icon) icon.textContent = '+';
+                        }
+                    });
+
+                    if (isHidden) {
+                        panel.removeAttribute('hidden');
+                        btn.setAttribute('aria-expanded', 'true');
+                        const icon = btn.querySelector('.faq__icon');
+                        if (icon) icon.textContent = '−';
+                    } else {
+                        panel.setAttribute('hidden', '');
+                        btn.setAttribute('aria-expanded', 'false');
+                        const icon = btn.querySelector('.faq__icon');
+                        if (icon) icon.textContent = '+';
+                    }
+                });
+            });
+        });
+
+    </script>
+
+
+    <script>
+
+        // Subscribe + navbar/cart UI is handled here.
+        // Collections ↔ Products sync and filtering is handled exclusively in js/script.js.
+        document.addEventListener('DOMContentLoaded', function () {
+            // Subscribe form handler
+            const subscribeForm = document.getElementById('subscribeForm');
+            const subscribeEmail = document.getElementById('subscribeEmail');
+            const subscribeSuccess = document.getElementById('subscribeSuccess');
+
+            if (subscribeForm && subscribeEmail && subscribeSuccess) {
+                subscribeForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const email = subscribeEmail.value.trim();
+                    if (!email) return;
+
+                    let subscribers = JSON.parse(localStorage.getItem('gymbroSubscribers')) || [];
+                    if (!subscribers.includes(email)) {
+                        subscribers.push(email);
+                        localStorage.setItem('gymbroSubscribers', JSON.stringify(subscribers));
+                    }
+
+                    subscribeSuccess.style.display = 'block';
+                    subscribeSuccess.style.opacity = '1';
+                    subscribeSuccess.style.transform = 'translateY(0)';
+                    subscribeForm.reset();
+
+                    setTimeout(() => {
+                        subscribeSuccess.style.opacity = '0';
+                        subscribeSuccess.style.transform = 'translateY(10px)';
+                        setTimeout(() => subscribeSuccess.style.display = 'none', 400);
+                    }, 4000);
+                });
+            }
+        });
+
+        // Keep a single scroll function available for inline onclick handlers in markup.
+        // Note: Premium smooth scrolling required by category filtering.
         function scrollToSection(sectionId) {
             const element = document.getElementById(sectionId);
             if (!element) return;
 
-            const navbar = document.querySelector('.gymbro-navbar');
-            const offset = navbar ? navbar.offsetHeight + 12 : 0;
-            const top = element.getBoundingClientRect().top + window.pageYOffset - offset;
-
-            window.scrollTo({ top, behavior: 'smooth' });
+            element.scrollIntoView({ behavior: "smooth", block: "start" });
         }
-
-        // Cart system
-        let cart = [];
-
-        function addToCart(name, price) {
-            cart.push({ name, price, quantity: 1 });
-            updateCart();
-        }
-
-        function updateCart() {
-            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-            document.getElementById('cartCount').textContent = count;
-            console.log('Cart updated:', cart);
-        }
-
-        function toggleCart() {
-            closeGymbroMenu();
-            document.getElementById('cartSidebar').classList.toggle('active');
-            document.getElementById('cartOverlay').classList.toggle('active');
-        }
-
-        function closeCart() {
-            document.getElementById('cartSidebar').classList.remove('active');
-            document.getElementById('cartOverlay').classList.remove('active');
-        }
-
-        document.getElementById('cartOverlay').onclick = closeCart;
-
-        const storyRevealItems = document.querySelectorAll('.story-reveal');
-
-        if ('IntersectionObserver' in window) {
-            const storyObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach((entry) => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('is-visible');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.2 });
-
-            storyRevealItems.forEach((item, index) => {
-                item.style.transitionDelay = `${index * 120}ms`;
-                storyObserver.observe(item);
-            });
-        } else {
-            storyRevealItems.forEach((item) => item.classList.add('is-visible'));
-        }
-
-        const gymbroNavbar = document.querySelector('.gymbro-navbar');
-        const gymbroNavToggle = document.getElementById('gymbroNavToggle');
-        const gymbroNavMenu = document.getElementById('gymbroNavMenu');
-
-        function closeGymbroMenu() {
-            if (!gymbroNavToggle || !gymbroNavMenu) return;
-            gymbroNavMenu.classList.remove('is-open');
-            gymbroNavToggle.classList.remove('is-active');
-            gymbroNavToggle.setAttribute('aria-expanded', 'false');
-            document.body.classList.remove('gymbro-menu-open');
-        }
-
-        function toggleGymbroMenu() {
-            if (!gymbroNavToggle || !gymbroNavMenu) return;
-            const isOpen = gymbroNavMenu.classList.toggle('is-open');
-            gymbroNavToggle.classList.toggle('is-active', isOpen);
-            gymbroNavToggle.setAttribute('aria-expanded', String(isOpen));
-            document.body.classList.toggle('gymbro-menu-open', isOpen);
-        }
-
-        function updateGymbroNavbarState() {
-            if (!gymbroNavbar) return;
-            gymbroNavbar.classList.toggle('gymbro-navbar--scrolled', window.scrollY > 16);
-        }
-
-        if (gymbroNavToggle) {
-            gymbroNavToggle.addEventListener('click', (event) => {
-                event.stopPropagation();
-                toggleGymbroMenu();
-            });
-        }
-
-        if (gymbroNavMenu) {
-            gymbroNavMenu.querySelectorAll('[data-gymbro-target]').forEach((link) => {
-                link.addEventListener('click', (event) => {
-                    const targetId = link.getAttribute('data-gymbro-target');
-                    if (!targetId) return;
-
-                    event.preventDefault();
-                    closeGymbroMenu();
-                    scrollToSection(targetId);
-                });
-            });
-        }
-
-        document.addEventListener('click', (event) => {
-            if (!gymbroNavbar || !gymbroNavMenu || !gymbroNavMenu.classList.contains('is-open')) return;
-            if (!gymbroNavbar.contains(event.target)) {
-                closeGymbroMenu();
-            }
-        });
-
-        window.addEventListener('resize', () => {
-            if (window.innerWidth > 768) {
-                closeGymbroMenu();
-            }
-        });
-
-        function applyActiveFilter(category) {
-            document.querySelectorAll('.filter-btn').forEach((btn) => {
-                const btnCategory = btn.dataset.filter || btn.dataset.category;
-                if (btnCategory === category) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
-        }
-
-        function filterProducts(category) {
-            const products = document.querySelectorAll('.product-card');
-            products.forEach((product) => {
-                const productCategory = product.dataset.category;
-                const shouldShow = category === 'all' || productCategory === category;
-                if (shouldShow) {
-                    product.classList.remove('hidden');
-                    product.classList.remove('fade-out');
-                    product.classList.add('fade-in');
-                    window.setTimeout(() => product.classList.remove('fade-in'), 350);
-                } else {
-                    product.classList.add('fade-out');
-                    window.setTimeout(() => {
-                        if (product.classList.contains('fade-out')) {
-                            product.classList.add('hidden');
-                        }
-                    }, 300);
-                }
-            });
-        }
-
-        function filterAndScroll(category) {
-            filterProducts(category);
-            applyActiveFilter(category);
-            scrollToSection('products');
-        }
-
-        document.querySelectorAll('.filter-btn').forEach((btn) => {
-            btn.addEventListener('click', () => {
-                const category = btn.getAttribute('data-filter') || btn.getAttribute('data-category');
-                if (!category) return;
-                filterAndScroll(category);
-            });
-        });
-
-        window.addEventListener('scroll', updateGymbroNavbarState, { passive: true });
-        updateGymbroNavbarState();
     </script>
 </body>
+
 
 </html>
