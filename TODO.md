@@ -1,8 +1,7 @@
 # TODO
 
-- [ ] Increase the hero video/card size to make the assets (video) appear larger.
-- [ ] Update `index.html` inline CSS for `.hero-video` sizing.
-- [ ] Update responsive styles for mobile breakpoints to keep video large.
-- [ ] (Optional) Adjust `.hero-container` layout gap/margins so the larger video fits without layout issues.
-- [ ] Verify by running in browser.
+- [x] Inspect current code for existing dumbbell animation (index.html + css/style.css + js/script.js).
+- [ ] Add dumbbell animation specifically for mobile responsive view.
+- [ ] Ensure no breaking changes to existing desktop layout/behavior.
+- [ ] Test by loading index.html on mobile viewport widths.
 

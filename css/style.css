@@ -766,6 +766,46 @@ h3 {
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
+
+    /* ===== Mobile-only: prevent horizontal overflow & make media responsive ===== */
+    html,
+    body {
+        overflow-x: hidden;
+        width: 100%;
+    }
+
+    img,
+    video {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .hero {
+        /* Mobile stacking + safe text rendering */
+        min-height: auto;
+    }
+
+    .hero-heading {
+        /* ===== Mobile-only: fix clipping of “BUILT FOR THE GRIND” ===== */
+        line-height: 1.02;
+        max-width: 100%;
+        overflow-wrap: anywhere;
+        word-break: normal;
+    }
+
+    .hero-buttons {
+        /* ===== Mobile-only: buttons fit viewport ===== */
+        transform: none;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+
+    .btn {
+        /* ===== Mobile-only: keep buttons from overflowing ===== */
+        max-width: 100%;
+    }
+
     .cart-sidebar {
         width: 100%;
         right: -100%;
@@ -783,6 +823,18 @@ h3 {
 }
 
 @media (max-width: 480px) {
+
+    /* ===== Mobile-only padding + overflow safety ===== */
+    html,
+    body {
+        overflow-x: hidden;
+    }
+
+    .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
     .filter-container {
         justify-content: flex-start;
         padding: 1rem 0;
@@ -792,7 +844,20 @@ h3 {
         padding: 1rem;
         font-size: 0.9rem;
     }
+
+    .btn {
+        /* ===== Mobile-only: full-width buttons on small screens ===== */
+        width: 100%;
+        justify-content: center;
+    }
+
+    .cart-sidebar {
+        /* ===== Mobile-only: ensure sidebar never overflows viewport width ===== */
+        padding-left: 16px;
+        padding-right: 16px;
+    }
 }
+
 
 /* FAQ ACCORDION (INDEX PAGE) */
 /* (temporarily removed as requested) */
