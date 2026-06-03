@@ -101,6 +101,14 @@
             transform: translateY(-100px);
         }
 
+        /* Desktop-only: nudge the entire left hero block down (do not affect tablet/mobile) */
+        @media (min-width: 1024px) {
+            .hero-text {
+                transform: translateY(-80px);
+            }
+        }
+
+
         .hero-video {
             width: auto;
             max-width: 650px;
