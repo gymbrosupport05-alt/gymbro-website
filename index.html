@@ -835,12 +835,14 @@
                 /* ===== Mobile-only: stack vertically ===== */
                 text-align: left;
                 /* keep premium readability */
-                gap: 2.5rem;
-                padding: 1rem 16px 2rem;
+                gap: 2rem;
+                padding: 96px 16px 32px;
                 align-items: flex-start;
             }
 
             .hero-container {
+                width: 100%;
+                max-width: 100%;
                 flex-direction: column;
                 /* ===== Mobile-only: text above image/video ===== */
                 gap: 1.5rem;
@@ -855,28 +857,46 @@
                 /* ===== Mobile-only: prevent clipping from desktop transforms ===== */
             }
 
+            .hero-tag {
+                position: relative;
+                z-index: 2;
+                margin-top: 0;
+                margin-bottom: 0.9rem;
+            }
+
             .hero-video {
                 order: 2;
-                width: 110%;
-                max-width: 110%;
-                height: 320px;
+                width: calc(100vw - 12px);
+                max-width: calc(100vw - 12px);
+                min-height: 320px;
+                aspect-ratio: 1 / 1;
+                margin: 0 auto;
                 margin-top: 0;
-                margin-left: -5%;
                 flex-shrink: 0;
+                transform: translateX(-6px);
             }
 
             .hero-heading {
                 /* ===== Mobile-only: fix clipping for “BUILT FOR THE GRIND” ===== */
                 max-width: 100%;
-                line-height: 1.02;
-                overflow-wrap: anywhere;
-                word-break: normal;
+                line-height: 1.05;
+                overflow-wrap: break-word;
+                word-break: break-word;
+                white-space: normal;
+                margin-bottom: 1.2rem;
             }
 
             .hero-subtext {
                 font-size: clamp(0.95rem, 2.2vw, 1.15rem);
-                line-height: 1.5;
+                line-height: 1.6;
                 max-width: 100%;
+                margin-bottom: 1.5rem;
+            }
+
+            .hero-heading .grind {
+                white-space: normal;
+                display: block;
+                margin-left: 0;
             }
 
             .hero-buttons {
@@ -932,7 +952,7 @@
                 content: "";
                 position: absolute;
                 top: 0;
-                width: 40px;
+                width: 24px;
                 height: 100%;
                 z-index: 2;
                 pointer-events: none;

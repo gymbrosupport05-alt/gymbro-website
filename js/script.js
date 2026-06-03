@@ -69,6 +69,26 @@ function closeCart() {
     document.getElementById('cartOverlay').classList.remove('active');
 }
 
+function toggleGymbroMenu() {
+    const menu = document.getElementById('gymbroNavMenu');
+    const toggle = document.getElementById('gymbroNavToggle');
+    if (!menu || !toggle) return;
+
+    const isOpen = menu.classList.toggle('is-open');
+    document.body.classList.toggle('gymbro-menu-open', isOpen);
+    toggle.setAttribute('aria-expanded', isOpen);
+}
+
+function closeGymbroMenu() {
+    const menu = document.getElementById('gymbroNavMenu');
+    const toggle = document.getElementById('gymbroNavToggle');
+    if (!menu || !toggle) return;
+
+    menu.classList.remove('is-open');
+    document.body.classList.remove('gymbro-menu-open');
+    toggle.setAttribute('aria-expanded', 'false');
+}
+
 function checkout() {
     if (cart.length === 0) return;
 
@@ -174,6 +194,13 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initialize "All" filter active
     const allButton = document.querySelector('.filter-btn[data-category="all"]');
     if (allButton) allButton.classList.add('active');
+
+    // Mobile hamburger toggle
+    const navToggle = document.getElementById('gymbroNavToggle');
+    const navMenu = document.getElementById('gymbroNavMenu');
+    if (navToggle && navMenu) {
+        navToggle.addEventListener('click', toggleGymbroMenu);
+    }
 
     // Navbar scroll effects
     window.addEventListener('scroll', () => {
