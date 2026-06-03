@@ -787,8 +787,8 @@
 
 
         .hero-dumbbell {
-            width: 150%;
-            height: 200%;
+            width: 110%;
+            height: 140%;
             object-fit: contain;
             background: transparent;
             pointer-events: none;
@@ -832,21 +832,21 @@
             .hero {
                 grid-template-columns: 1fr;
                 flex-direction: column;
-                /* ===== Mobile-only: stack vertically ===== */
                 text-align: left;
-                /* keep premium readability */
-                gap: 2rem;
-                padding: 96px 16px 32px;
-                align-items: flex-start;
+                gap: 1.5rem;
+                padding: clamp(3rem, 6vw, 4.5rem) 16px 1.5rem;
+                align-items: center;
+                justify-content: center;
+                min-height: auto;
             }
 
             .hero-container {
                 width: 100%;
                 max-width: 100%;
                 flex-direction: column;
-                /* ===== Mobile-only: text above image/video ===== */
                 gap: 1.5rem;
                 margin-top: 0;
+                align-items: center;
             }
 
             .hero-text {
@@ -854,7 +854,6 @@
                 width: 100%;
                 max-width: 100%;
                 transform: none;
-                /* ===== Mobile-only: prevent clipping from desktop transforms ===== */
             }
 
             .hero-tag {
@@ -866,21 +865,19 @@
 
             .hero-video {
                 order: 2;
-                width: calc(100vw - 8px);
-                max-width: calc(100vw - 8px);
-                /* Increase mobile card size (height) */
-                min-height: min(62vh, 560px);
-                /* Let height drive layout; prevents square constraint from limiting growth */
+                width: 100%;
+                max-width: 100%;
+                min-height: 0;
+                height: auto;
                 aspect-ratio: auto;
                 margin: 0 auto;
                 margin-top: 0;
                 flex-shrink: 0;
-                transform: translateX(-4px);
+                transform: none;
+                padding: 0;
             }
 
-
             .hero-heading {
-                /* ===== Mobile-only: fix clipping for “BUILT FOR THE GRIND” ===== */
                 max-width: 100%;
                 line-height: 1.05;
                 overflow-wrap: break-word;
@@ -903,13 +900,11 @@
             }
 
             .hero-buttons {
-                /* ===== Mobile-only: keep buttons within viewport ===== */
                 flex-wrap: wrap;
                 gap: 12px;
             }
 
             .btn {
-                /* ===== Mobile-only: keep primary/secondary buttons from overflowing ===== */
                 max-width: 100%;
             }
 
@@ -917,31 +912,30 @@
             .hero-dumbbell {
                 pointer-events: none;
                 will-change: transform, filter;
+                width: 100%;
+                height: auto;
+                object-fit: contain;
+                object-position: center;
+                transform: none !important;
             }
-
 
             @keyframes mobileDumbbellFloat {
                 0% {
-                    transform: perspective(800px) rotateY(5deg) rotateX(3deg) translateY(-38px) scale(1.0);
+                    transform: perspective(800px) rotateY(5deg) rotateX(3deg) translateY(-38px);
                 }
 
                 50% {
-                    transform: perspective(800px) rotateY(0deg) rotateX(0deg) translateY(-18px) scale(1.03);
+                    transform: perspective(800px) rotateY(0deg) rotateX(0deg) translateY(-18px);
                 }
 
                 100% {
-                    transform: perspective(800px) rotateY(5deg) rotateX(3deg) translateY(-38px) scale(1.0);
+                    transform: perspective(800px) rotateY(5deg) rotateX(3deg) translateY(-38px);
                 }
             }
 
-            /* Apply animation only on touch/mobile viewports */
             .hero-dumbbell {
                 animation: mobileDumbbellFloat 1.8s ease-in-out infinite;
                 filter: brightness(0.95) contrast(1.06) drop-shadow(0 0 12px rgba(255, 255, 255, 0.10));
-                object-fit: contain;
-                object-position: center;
-                width: 100%;
-                height: 100%;
             }
 
             @media (prefers-reduced-motion: reduce) {
@@ -976,7 +970,8 @@
                 object-fit: contain;
                 object-position: center;
                 width: 100%;
-                height: 100%;
+                height: auto;
+                transform: none;
             }
 
             .story {
