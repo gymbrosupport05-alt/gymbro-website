@@ -1191,3 +1191,72 @@ h3 {
         font-size: 0.95rem;
     }
 }
+
+/* ===== Mobile-only Hero responsiveness fixes (<= 768px) ===== */
+@media (max-width: 768px) {
+
+    /* Make sure in-page scroll positioning doesn't land behind the navbar */
+    html {
+        scroll-padding-top: 96px;
+    }
+
+    /* Offset hero content so it never starts under the fixed/sticky navbar */
+    .hero {
+        padding-top: 96px;
+        align-items: flex-start;
+    }
+
+    /* Hero content stacking spacing (keeps black-and-gold design intact) */
+    .hero-content {
+        padding-top: 0;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    /* Ensure the tag is not visually clipped/covered */
+    .hero-tag {
+        margin-top: 0;
+        padding-top: 0;
+        z-index: 1;
+    }
+
+    /* Never clip the “BUILT FOR THE GRIND” heading */
+    .hero-heading {
+        z-index: 2;
+        overflow: visible;
+    }
+
+    /* Video/dumbbell occupies ~90–100% viewport width, centered, aspect ratio preserved */
+    .hero-video {
+        width: 100%;
+        max-width: 100vw;
+        margin-left: auto;
+        margin-right: auto;
+        transform: none;
+    }
+
+    /* Ensure the actual media scales properly and stays centered */
+    .hero-video video {
+        width: 100%;
+        height: 100%;
+        max-height: none;
+        object-fit: contain;
+        object-position: center;
+        display: block;
+        margin: 0 auto;
+        transform: none;
+    }
+
+    /* Keep CTAs visible and aligned within the hero column */
+    .hero-buttons {
+        transform: none;
+        justify-content: flex-start;
+        gap: 12px;
+        padding-bottom: 12px;
+    }
+
+    .btn {
+        width: auto;
+        max-width: 100%;
+    }
+}

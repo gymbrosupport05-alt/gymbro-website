@@ -1,7 +1,7 @@
-# TODO
-
-- [x] Inspect current code for existing dumbbell animation (index.html + css/style.css + js/script.js).
-- [ ] Add dumbbell animation specifically for mobile responsive view.
-- [ ] Ensure no breaking changes to existing desktop layout/behavior.
-- [ ] Test by loading index.html on mobile viewport widths.
+- [x] Append mobile-only CSS (max-width: 768px) to css/style.css to fix Hero responsiveness.
+  - [x] Prevent navbar overlap (hero content and scroll offset)
+  - [x] Ensure hero tag is visible
+  - [x] Ensure “BUILT FOR THE GRIND” never clips
+  - [x] Scale hero video/dumbbell to ~90–100vw, centered, aspect-ratio preserved
+  - [x] Maintain spacing and ensure CTAs fully visible/aligned
 
