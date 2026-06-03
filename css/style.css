@@ -787,11 +787,21 @@ h3 {
 
     .hero-heading {
         /* ===== Mobile-only: fix clipping of “BUILT FOR THE GRIND” ===== */
-        line-height: 1.02;
-        max-width: 100%;
+        width: 100%;
+        max-width: none;
+        overflow: visible;
+
+        line-height: 1;
+
+        /* word wrapping */
         overflow-wrap: anywhere;
         word-break: normal;
+        white-space: normal;
+
+        /* mobile font-size using clamp */
+        font-size: clamp(2.25rem, 9vw, 4.25rem);
     }
+
 
     .hero-buttons {
         /* ===== Mobile-only: buttons fit viewport ===== */
