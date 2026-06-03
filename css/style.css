@@ -1233,6 +1233,8 @@ h3 {
         margin-left: auto;
         margin-right: auto;
         transform: none;
+        /* Increase the animation/card size on mobile */
+        height: min(62vh, 560px);
     }
 
     /* Ensure the actual media scales properly and stays centered */
