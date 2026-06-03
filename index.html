@@ -868,13 +868,16 @@
                 order: 2;
                 width: calc(100vw - 8px);
                 max-width: calc(100vw - 8px);
-                min-height: 360px;
-                aspect-ratio: 1 / 1;
+                /* Increase mobile card size (height) */
+                min-height: min(62vh, 560px);
+                /* Let height drive layout; prevents square constraint from limiting growth */
+                aspect-ratio: auto;
                 margin: 0 auto;
                 margin-top: 0;
                 flex-shrink: 0;
                 transform: translateX(-4px);
             }
+
 
             .hero-heading {
                 /* ===== Mobile-only: fix clipping for “BUILT FOR THE GRIND” ===== */
@@ -1695,5 +1698,6 @@
         }
     </script>
 </body>
+
 
 </html>
