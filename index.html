@@ -834,7 +834,7 @@
                 flex-direction: column;
                 text-align: left;
                 gap: 1.5rem;
-                padding: clamp(3rem, 6vw, 4.5rem) 16px 1.5rem;
+                padding: 5rem 16px 1.5rem;
                 align-items: center;
                 justify-content: center;
                 min-height: auto;
@@ -858,13 +858,18 @@
 
             .hero-tag {
                 position: relative;
-                z-index: 2;
+                z-index: 10;
                 margin-top: 0;
-                margin-bottom: 0.9rem;
-                font-size: 0.85rem;
-                letter-spacing: 0.3em;
+                margin-bottom: 0.8rem;
+                font-size: 0.8rem;
+                letter-spacing: 0.35em;
+                color: #ffffff;
+                text-transform: uppercase;
+                text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
                 visibility: visible;
                 opacity: 1;
+                display: block;
+                font-weight: 700;
             }
 
             .hero-video {
@@ -913,17 +918,6 @@
             }
 
             /* Mobile-only dumbbell animation (does not affect desktop) */
-            .hero-dumbbell {
-                pointer-events: none;
-                will-change: transform, filter;
-                width: 130%;
-                height: auto;
-                object-fit: contain;
-                object-position: center;
-                transform: none !important;
-                margin: 0 auto;
-            }
-
             @keyframes mobileDumbbellFloat {
                 0% {
                     transform: perspective(800px) rotateY(5deg) rotateX(3deg) translateY(-38px);
@@ -939,6 +933,14 @@
             }
 
             .hero-dumbbell {
+                pointer-events: none;
+                will-change: transform, filter;
+                width: 190%;
+                height: auto;
+                object-fit: contain;
+                object-position: center;
+                transform: none !important;
+                margin: 0 auto;
                 animation: mobileDumbbellFloat 1.8s ease-in-out infinite;
                 filter: brightness(0.95) contrast(1.06) drop-shadow(0 0 12px rgba(255, 255, 255, 0.10));
             }
