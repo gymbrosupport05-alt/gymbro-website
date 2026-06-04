@@ -1358,129 +1358,17 @@
         </div>
 
 
-        <div class="product-grid">
-            <div class="product-card" data-category="hoodies" data-price="89.99">
+        <div class="product-grid" id="productsGrid">
+            <div class="product-card" style="cursor: default;">
                 <div class="product-image"
-                    style="background-image: url('images/gym-bro-hoodie.webp'); background-size: cover; background-position: center; height: 280px;">
-                    <span class="sale-badge">SALE</span>
+                    style="height: 280px; display:flex; align-items:center; justify-content:center;">
+                    <span style="color:#ccc; font-weight:600;">Loading products...</span>
                 </div>
                 <div class="product-info">
-                    <span class="category-label">MALE - HOODIES</span>
-                    <h3 class="product-name">Gym Bro Hoodie</h3>
-                    <div class="product-price">₹4950 RS</div>
-                    <button class="btn-cart" onclick="addToCart('Gym Bro Hoodie', 89.99)">ADD TO CART</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="oversized" data-price="44.99">
-                <div class="product-image"
-                    style="background-image: url('images/oversized-gym-tshirt.webp'); background-size: cover; background-position: center; height: 280px;">
-                </div>
-                <div class="product-info">
-                    <span class="category-label">MALE - SLEEVELESS</span>
-                    <h3 class="product-name">Sleeveless Tank Tee</h3>
-                    <div class="product-price">₹2475 RS</div>
-                    <button class="btn-cart" onclick="addToCart('Sleeveless Tank Tee', 44.99)">ADD TO CART</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="oversized">
-                <div class="product-image"
-                    style="background-image: url('https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=400'); background-size: cover; background-position: center; height: 280px;">
-                </div>
-                <div class="product-info">
-                    <span class="category-label">FEMALE - TEES</span>
-                    <h3 class="product-name">Siren Crop Tee</h3>
-                    <div class="product-price">₹2200 RS</div>
-                    <button class="btn-cart" onclick="addToCart('Siren Crop Tee', 39.99)">ADD TO CART</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="trackpants" data-price="69.99">
-                <div class="product-image"
-                    style="background-image: url('images/track-pants.jpg'); background-size: cover; background-position: center; height: 280px;">
-                    <span class="sale-badge">SALE</span>
-                </div>
-                <div class="product-info">
-                    <span class="category-label">MALE - PANTS</span>
-                    <h3 class="product-name">Beast Track Pants</h3>
-                    <div class="product-price">₹3850 RS</div>
-                    <button class="btn-cart" onclick="addToCart('Beast Track Pants', 69.99)">ADD TO CART</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="accessories" data-price="29.99">
-                <div class="product-image"
-                    style="background-image: url('images/pro-lift-gloves.jpg'); background-size: cover; background-position: center; height: 280px;">
-                </div>
-                <div class="product-info">
-                    <span class="category-label">ACCESSORIES</span>
-                    <h3 class="product-name">Pro Lift Gloves</h3>
-                    <div class="product-price">₹1650 RS</div>
-                    <button class="btn-cart" onclick="addToCart('Pro Lift Gloves', 29.99)">ADD TO CART</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="trackpants">
-                <div class="product-image"
-                    style="background-image: url('images/warrior-leggings.webp'); background-size: cover; background-position: center; height: 280px;">
-                </div>
-                <div class="product-info">
-                    <span class="category-label">FEMALE - LEGGINGS</span>
-                    <h3 class="product-name">Warrior Leggings</h3>
-                    <div class="product-price">₹4125 RS</div>
-                    <button class="btn-cart" onclick="addToCart('Warrior Leggings', 74.99)">ADD TO CART</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="accessories">
-                <div class="product-image"
-                    style="background-image: url('images/lifting-straps.jpg'); background-size: cover; background-position: center; height: 280px;">
-                    <span class="sale-badge">SALE</span>
-                </div>
-                <div class="product-info">
-                    <span class="category-label">ACCESSORIES</span>
-                    <h3 class="product-name">Lifting Straps</h3>
-                    <div class="product-price">₹1100 RS</div>
-                    <button class="btn-cart" onclick="addToCart('Lifting Straps', 19.99)">ADD TO CART</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="accessories">
-                <div class="product-image"
-                    style="background-image: url('images/deadlift-belt.jpg'); background-size: cover; background-position: center; height: 280px;">
-                </div>
-                <div class="product-info">
-                    <span class="category-label">ACCESSORIES</span>
-                    <h3 class="product-name">Deadlift Belt</h3>
-                    <div class="product-price">₹2750 RS</div>
-                    <button class="btn-cart" onclick="addToCart('Deadlift Belt', 49.99)">ADD TO CART</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="accessories">
-                <div class="product-image"
-                    style="background-image: url('images/muscleblaze-shaker.webp'); background-size: cover; background-position: center; height: 280px;">
-                </div>
-                <div class="product-info">
-                    <span class="category-label">ACCESSORIES</span>
-                    <h3 class="product-name">Muscle Blaze Shaker</h3>
-                    <div class="product-price">₹1375 RS</div>
-                    <button class="btn-cart" onclick="addToCart('Muscle Blaze Shaker', 24.99)">ADD TO CART</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="accessories">
-                <div class="product-image"
-                    style="background-image: url('images/gym-towel.webp'); background-size: cover; background-position: center; height: 280px;">
-                </div>
-                <div class="product-info">
-                    <span class="category-label">ACCESSORIES</span>
-                    <h3 class="product-name">Gym Towel</h3>
-                    <div class="product-price">₹1100 RS</div>
-                    <button class="btn-cart" onclick="addToCart('Gym Towel', 19.99)">ADD TO CART</button>
-                </div>
-            </div>
-            <div class="product-card" data-category="accessories">
-                <div class="product-image"
-                    style="background-image: url('images/muscleblaze-gym-bag.webp'); background-size: cover; background-position: center; height: 280px;">
-                </div>
-                <div class="product-info">
-                    <span class="category-label">ACCESSORIES</span>
-                    <h3 class="product-name">MuscleBlaze Gym Bag</h3>
-                    <div class="product-price">₹4400 RS</div>
-                    <button class="btn-cart" onclick="addToCart('MuscleBlaze Gym Bag', 79.99)">ADD TO CART</button>
+                    <span class="category-label" style="opacity:0;">LOADING</span>
+                    <h3 class="product-name" style="opacity:0;">&nbsp;</h3>
+                    <div class="price" style="opacity:0;">&nbsp;</div>
+                    <button class="btn-cart" style="opacity:0; pointer-events:none;">ADD TO CART</button>
                 </div>
             </div>
         </div>
