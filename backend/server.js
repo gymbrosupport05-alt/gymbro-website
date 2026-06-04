@@ -20,7 +20,7 @@ app.use(cors({
         if (!origin) return callback(null, true);
 
         const allowedLocalOrigins = new Set([
-            'http://localhost:5500',
+            'https://gymbro-website-ten.vercel.apphttp://localhost:5500',
             'http://127.0.0.1:5500'
         ]);
 
@@ -54,6 +54,10 @@ app.get('/health', (req, res) => {
 
 app.use('/api/orders', ordersRouter);
 app.use('/api/products', productsRouter);
+
+// Startup debug logs to confirm routes are mounted
+console.log('Products route mounted at /api/products');
+console.log('Orders route mounted at /api/orders');
 
 const PORT = process.env.PORT || 3001;
 

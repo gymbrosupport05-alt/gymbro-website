@@ -3,7 +3,7 @@ let cart = JSON.parse(localStorage.getItem('gymbroCart')) || [];
 
 // ===== PRODUCTS: fetch from backend + render cards =====
 // IMPORTANT: set this to the same base URL that makes checkout() work.
-const API_BASE = 'http://localhost:3001';
+const API_BASE = 'https://gymbro-website-production.up.railway.app';
 const PRODUCTS_ENDPOINT = `${API_BASE}/api/products`;
 
 function formatINR(productPrice) {
@@ -236,7 +236,7 @@ function closeGymbroMenu() {
 function checkout() {
     if (cart.length === 0) return;
 
-    const API_BASE = 'http://localhost:3001';
+    const API_BASE = 'https://gymbro-website-production.up.railway.app';
     const endpoint = `${API_BASE}/api/orders`;
 
     const customerName = prompt('Enter customer name:') || 'Guest';
