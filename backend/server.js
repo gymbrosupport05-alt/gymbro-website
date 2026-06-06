@@ -42,9 +42,12 @@ app.use(cors({
 
         return callback(new Error('Not allowed by CORS')); // blocked
     },
-    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Ensure preflight OPTIONS requests are accepted for non-simple methods like PUT/DELETE
+app.options('*', cors());
 
 app.use(morgan('dev'));
 
