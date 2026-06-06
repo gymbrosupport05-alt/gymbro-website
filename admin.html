@@ -304,6 +304,104 @@
             </div>
         </div>
 
+        <!-- ========================= -->
+        <!-- Product Management (Admin) -->
+        <!-- ========================= -->
+        <div id="productManagementSection" style="margin-top: 2.5rem;">
+            <div
+                style="display:flex; align-items:center; justify-content: space-between; gap: 12px; margin-bottom: 14px;">
+                <div>
+                    <div style="color:#fff; font-weight:800; font-size: 1.25rem;">Product Management</div>
+                    <div id="productsLoadStatus" style="color:#ccc; font-size:0.95rem; margin-top:4px;"></div>
+                </div>
+                <div style="color:#ccc; font-size:0.95rem;">CRUD Products (MongoDB via backend)</div>
+            </div>
+
+            <div class="orders-table" style="padding: 1.25rem; margin-bottom: 1.25rem;">
+                <form id="productForm" onsubmit="onAddOrUpdateProduct(event)"
+                    style="display:grid; grid-template-columns: repeat(12, 1fr); gap: 12px;">
+                    <input type="hidden" id="productId" name="id" value="" />
+
+                    <div style="grid-column: span 6;">
+                        <label style="display:block; color:#ccc; font-size:0.9rem; margin-bottom:6px;">Product
+                            Name</label>
+                        <input id="productName" name="name" required class="login-input" style="margin-bottom:0;"
+                            placeholder="e.g. Gym T-Shirt" />
+                    </div>
+
+                    <div style="grid-column: span 3;">
+                        <label style="display:block; color:#ccc; font-size:0.9rem; margin-bottom:6px;">Price</label>
+                        <input id="productPrice" name="price" required type="number" min="0" step="0.01"
+                            class="login-input" style="margin-bottom:0;" placeholder="e.g. 999" />
+                    </div>
+
+                    <div style="grid-column: span 3;">
+                        <label style="display:block; color:#ccc; font-size:0.9rem; margin-bottom:6px;">Stock
+                            Quantity</label>
+                        <input id="productStock" name="stock" required type="number" min="0" step="1"
+                            class="login-input" style="margin-bottom:0;" placeholder="e.g. 25" />
+                    </div>
+
+                    <div style="grid-column: span 4;">
+                        <label style="display:block; color:#ccc; font-size:0.9rem; margin-bottom:6px;">Category</label>
+                        <input id="productCategory" name="category" required class="login-input"
+                            style="margin-bottom:0;" placeholder="e.g. T-Shirts" />
+                    </div>
+
+                    <div style="grid-column: span 8;">
+                        <label style="display:block; color:#ccc; font-size:0.9rem; margin-bottom:6px;">Image URL</label>
+                        <input id="productImage" name="image" required class="login-input" style="margin-bottom:0;"
+                            placeholder="https://.../image.webp" />
+                    </div>
+
+                    <div style="grid-column: span 12;">
+                        <label
+                            style="display:block; color:#ccc; font-size:0.9rem; margin-bottom:6px;">Description</label>
+                        <textarea id="productDescription" name="description" required class="login-input"
+                            style="margin-bottom:0; min-height: 110px; resize: vertical;"
+                            placeholder="Short product description..."></textarea>
+                    </div>
+
+                    <div
+                        style="grid-column: span 12; display:flex; gap: 12px; align-items:center; justify-content:flex-end;">
+                        <div style="color:#ff4757; font-weight:700; margin-right:auto;" id="productFormMode">Add Product
+                        </div>
+                        <button id="productSubmitBtn" type="submit" class="login-btn"
+                            style="width:auto; padding: 0.85rem 1.25rem; border-radius: 12px; background:#ff4757;">Add
+                            Product</button>
+                        <button type="button" class="login-btn"
+                            style="width:auto; padding: 0.85rem 1.25rem; border-radius: 12px; background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.15);"
+                            onclick="clearProductForm()">Clear</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="table-container">
+                <div class="orders-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                                <th>Stock</th>
+                                <th>Product ID</th>
+                                <th>Edit</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productsTableBody">
+                            <tr>
+                                <td colspan="8" class="no-orders">Loading products...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
         <script>
             const PASSWORD = 'admin';
             let orders = [];
@@ -575,6 +673,265 @@
 
             // Refresh orders every 5s
             setInterval(loadOrders, 5000);
+
+            // =========================
+            // Product Management (Admin)
+            // =========================
+
+            let products = [];
+
+            function getAdminApiBase() {
+                // Keep aligned with existing apiBase() used for orders.
+                return apiBase();
+            }
+
+            function escapeHTML(v) {
+                return String(v ?? '')
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '<')
+                    .replace(/>/g, '>')
+                    .replace(/"/g, '"')
+                    .replace(/'/g, '&#39;');
+            }
+
+            function numberOrUndefined(n) {
+                // For display/input coercion only.
+                const num = Number(n);
+                return Number.isFinite(num) ? num : undefined;
+            }
+
+            async function loadProductsForAdmin() {
+                const tbody = document.getElementById('productsTableBody');
+                const statusEl = document.getElementById('productsLoadStatus');
+
+                try {
+                    statusEl.textContent = 'Loading products...';
+
+                    const url = `${getAdminApiBase()}/api/products`;
+                    const r = await fetch(url);
+                    const data = await r.json();
+                    if (!r.ok || !data?.ok) {
+                        throw new Error(data?.error || 'Failed to fetch products');
+                    }
+
+                    products = Array.isArray(data.products) ? data.products : [];
+                    statusEl.textContent = '';
+                    renderProductsTable();
+                } catch (err) {
+                    console.error(err);
+                    statusEl.textContent = 'Failed to load products.';
+                    products = [];
+                    renderProductsTable();
+                }
+            }
+
+            function renderProductsTable() {
+                const tbody = document.getElementById('productsTableBody');
+                if (!tbody) return;
+
+                if (!products.length) {
+                    tbody.innerHTML = '<tr><td colspan="9" class="no-orders">No products found.</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = products.map(p => {
+                    const id = p?._id || p?.id || '';
+                    const name = p?.name ?? '';
+                    const category = p?.category ?? '';
+                    const description = p?.description ?? '';
+                    const image = p?.image ?? '';
+                    const price = p?.price ?? 0;
+                    const stock = p?.stock ?? 0;
+
+                    return `
+                        <tr>
+                            <td>
+                                <img src="${escapeHTML(image)}" alt="${escapeHTML(name)}" style="width:56px;height:56px;object-fit:cover;border-radius:10px;" />
+                            </td>
+                            <td>${escapeHTML(name)}</td>
+                            <td>${escapeHTML(category)}</td>
+                            <td>₹${escapeHTML(Math.round(Number(price) || 0))} INR</td>
+                            <td>${escapeHTML(Number(stock) || 0)}</td>
+                            <td>${escapeHTML(id)}</td>
+                            <td>
+                                <button class="action-btn" style="color:#00ff88;" onclick="onEditProduct('${escapeHTML(id)}')" title="Edit product">
+                                    <i class="fas fa-pen"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <button class="action-btn delete-btn" onclick="onDeleteProduct('${escapeHTML(id)}')" title="Delete product">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+
+            function getProductFormValues() {
+                const form = document.getElementById('productForm');
+                const id = document.getElementById('productId').value;
+
+                return {
+                    id: id ? String(id) : null,
+                    name: form.elements['name'].value,
+                    price: form.elements['price'].value,
+                    category: form.elements['category'].value,
+                    description: form.elements['description'].value,
+                    image: form.elements['image'].value,
+                    stock: form.elements['stock'].value
+                };
+            }
+
+            function setProductFormValues(product) {
+                document.getElementById('productId').value = product?._id || product?.id || '';
+                document.getElementById('productName').value = product?.name ?? '';
+                document.getElementById('productPrice').value = product?.price ?? '';
+                document.getElementById('productCategory').value = product?.category ?? '';
+                document.getElementById('productDescription').value = product?.description ?? '';
+                document.getElementById('productImage').value = product?.image ?? '';
+                document.getElementById('productStock').value = product?.stock ?? '';
+            }
+
+            function clearProductForm() {
+                document.getElementById('productId').value = '';
+                document.getElementById('productName').value = '';
+                document.getElementById('productPrice').value = '';
+                document.getElementById('productCategory').value = '';
+                document.getElementById('productDescription').value = '';
+                document.getElementById('productImage').value = '';
+                document.getElementById('productStock').value = '';
+                document.getElementById('productFormMode').textContent = 'Add Product';
+                document.getElementById('productSubmitBtn').textContent = 'Add Product';
+            }
+
+            // Expose for inline onclick
+            window.clearProductForm = clearProductForm;
+
+            function validateProductInputs({ name, price, category, description, image, stock }) {
+                if (!name || String(name).trim().length === 0) return 'Product Name is required.';
+
+                const priceNum = Number(price);
+                if (!Number.isFinite(priceNum) || Number.isNaN(priceNum) || priceNum < 0) return 'Price must be a valid non-negative number.';
+
+                if (!category || String(category).trim().length === 0) return 'Category is required.';
+
+                if (!description || String(description).trim().length === 0) return 'Description is required.';
+
+                if (!image || String(image).trim().length === 0) return 'Image URL is required.';
+
+                const stockNum = Number(stock);
+                if (!Number.isFinite(stockNum) || Number.isNaN(stockNum) || stockNum < 0) return 'Stock Quantity must be a valid non-negative number.';
+
+                return null;
+            }
+
+            async function onAddOrUpdateProduct(e) {
+                if (e) e.preventDefault();
+
+                const values = getProductFormValues();
+                const err = validateProductInputs(values);
+                if (err) {
+                    alert(err);
+                    return;
+                }
+
+                const payload = {
+                    name: String(values.name).trim(),
+                    price: Number(values.price),
+                    category: String(values.category).trim(),
+                    description: String(values.description).trim(),
+                    image: String(values.image).trim(),
+                    stock: Number(values.stock)
+                };
+
+                try {
+                    const apiBaseUrl = getAdminApiBase();
+
+                    let r;
+                    if (values.id) {
+                        r = await fetch(`${apiBaseUrl}/api/products/${encodeURIComponent(values.id)}`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                    } else {
+                        r = await fetch(`${apiBaseUrl}/api/products`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                    }
+
+                    const data = await r.json().catch(() => ({}));
+                    if (!r.ok || !data?.ok) {
+                        throw new Error(data?.error || 'Failed to save product');
+                    }
+
+                    alert(values.id ? 'Product updated successfully!' : 'Product added successfully!');
+                    clearProductForm();
+                    await loadProductsForAdmin();
+                } catch (err2) {
+                    console.error(err2);
+                    alert(err2?.message || 'Failed to save product.');
+                }
+            }
+
+            async function onEditProduct(productId) {
+                const p = products.find(x => String(x?._id || x?.id) === String(productId));
+                if (!p) {
+                    alert('Product not found in current list.');
+                    return;
+                }
+
+                setProductFormValues(p);
+                document.getElementById('productFormMode').textContent = 'Update Product';
+                document.getElementById('productSubmitBtn').textContent = 'Update Product';
+
+                // Scroll to form on mobile
+                document.getElementById('productManagementSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+
+            async function onDeleteProduct(productId) {
+                const confirmed = confirm('Are you sure you want to delete this product?');
+                if (!confirmed) return;
+
+                try {
+                    const url = `${getAdminApiBase()}/api/products/${encodeURIComponent(productId)}`;
+                    const r = await fetch(url, { method: 'DELETE' });
+                    const data = await r.json().catch(() => ({}));
+                    if (!r.ok || !data?.ok) {
+                        throw new Error(data?.error || 'Failed to delete product');
+                    }
+
+                    alert('Product deleted successfully!');
+                    await loadProductsForAdmin();
+                } catch (err2) {
+                    console.error(err2);
+                    alert(err2?.message || 'Failed to delete product.');
+                }
+            }
+
+            // Expose functions used by inline onclick in table rows.
+            window.onEditProduct = onEditProduct;
+            window.onDeleteProduct = onDeleteProduct;
+            window.onAddOrUpdateProduct = onAddOrUpdateProduct;
+
+            // Init product form and load list after admin login.
+            function initProductManagement() {
+                clearProductForm();
+                loadProductsForAdmin();
+            }
+
+            const originalLoadOrders = loadOrders;
+            loadOrders = async function () {
+                await originalLoadOrders();
+                // Only initialize once.
+                if (!window.__productManagementInited) {
+                    window.__productManagementInited = true;
+                    initProductManagement();
+                }
+            };
 
         </script>
 </body>
